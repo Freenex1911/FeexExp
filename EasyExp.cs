@@ -38,7 +38,6 @@ namespace Freenex.EasyExp
 
         protected override void Unload()
         {
-            Instance = this;
             Rocket.Unturned.Events.UnturnedPlayerEvents.OnPlayerDeath -= UnturnedPlayerEvents_OnPlayerDeath;
             Rocket.Unturned.Events.UnturnedPlayerEvents.OnPlayerRevive -= UnturnedPlayerEvents_OnPlayerRevive;
             Logger.Log("Freenex's EasyExp has been unloaded!");
@@ -67,6 +66,9 @@ namespace Freenex.EasyExp
 
         void UnturnedPlayerEvents_OnPlayerDeath(Rocket.Unturned.Player.UnturnedPlayer player, SDG.Unturned.EDeathCause cause, SDG.Unturned.ELimb limb, Steamworks.CSteamID murderer)
         {
+            UnturnedPlayer UPmurderer = UnturnedPlayer.FromCSteamID(murderer);
+            if (player == UPmurderer) { return; }
+
             if (player.HasPermission("exp.deleteondeath") && (!(player.IsAdmin)))
             {
                 player.Experience = 0;
@@ -75,8 +77,6 @@ namespace Freenex.EasyExp
                     UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_ondeath_msg"), Color.yellow);
                 }
             }
-
-            UnturnedPlayer UPmurderer = UnturnedPlayer.FromCSteamID(murderer);
 
             foreach (string playerPermission in UPmurderer.GetPermissions())
             {
