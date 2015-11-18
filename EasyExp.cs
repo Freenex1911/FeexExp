@@ -67,7 +67,11 @@ namespace Freenex.EasyExp
         void UnturnedPlayerEvents_OnPlayerDeath(Rocket.Unturned.Player.UnturnedPlayer player, SDG.Unturned.EDeathCause cause, SDG.Unturned.ELimb limb, Steamworks.CSteamID murderer)
         {
             UnturnedPlayer UPmurderer = UnturnedPlayer.FromCSteamID(murderer);
-            if (player == UPmurderer) { return; }
+            try
+            {
+                if (player.Id == UPmurderer.Id) { return; }
+            }
+            catch { return; }
 
             if (player.HasPermission("exp.deleteondeath") && (!(player.IsAdmin)))
             {
