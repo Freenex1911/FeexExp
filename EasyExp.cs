@@ -93,12 +93,11 @@ namespace Freenex.EasyExp
                     string[] OnKillPermission = playerPermission.Replace("exp.onkill.", string.Empty).Split('.');
 
                     uint OnKillExperience;
-                    uint OnKillPercentage;
+                    uint OnKillPercentage = 100;
                     bool isExperienceNumeric = uint.TryParse(OnKillPermission[0], out OnKillExperience);
                     if (!isExperienceNumeric) { Logger.LogError(OnKillPermission[0] + " is not numeric."); }
 
-                    if (OnKillPermission[1] == string.Empty) { OnKillPercentage = 100; }
-                    else
+                    if (OnKillPermission.Length == 2)
                     {
                         bool isPercentageNumeric = uint.TryParse(OnKillPermission[1], out OnKillPercentage);
                         if (!isPercentageNumeric) { Logger.LogError(OnKillPermission[1] + " is not numeric."); }
@@ -109,7 +108,7 @@ namespace Freenex.EasyExp
 
                     if (chance <= OnKillPercentage)
                     {
-                        UPmurderer.Experience = UPmurderer.Experience + OnKillPercentage;
+                        UPmurderer.Experience = UPmurderer.Experience + OnKillExperience;
                         if (!(EasyExp.Instance.Translations.Instance.Translate("experience_onkill_true") == string.Empty))
                         {
                             UnturnedChat.Say(UPmurderer, EasyExp.Instance.Translations.Instance.Translate("experience_onkill_true", player.DisplayName, OnKillExperience), Color.yellow);
