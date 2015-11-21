@@ -15,57 +15,77 @@ namespace Freenex.EasyExp
                 return;
             }
 
+            UnturnedPlayer UPcaller = (UnturnedPlayer)caller;
+
             if (command.Length == 1)
             {
-                if (!(caller.HasPermission("exp"))) { return; }
+                if (!(caller.HasPermission("exp.self"))) { return; }
                 uint commandExp;
                 bool isNumeric = uint.TryParse(command[0], out commandExp);
                 if (isNumeric)
                 {
-                    UnturnedPlayer player = (UnturnedPlayer)caller;
-                    player.Experience = player.Experience + commandExp;
-                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_self_successful") == string.Empty))
+                    UPcaller.Experience = UPcaller.Experience + commandExp;
+                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_self") == string.Empty))
                     {
-                        UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_self_successful", commandExp), Color.yellow);
+                        UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_self", commandExp), Color.yellow);
                     }
                 }
             }
 
             if (command.Length == 2)
             {
-                if (!(caller.HasPermission("exp.other"))) { return; }
+                if (!caller.HasPermission("exp.give") && !caller.HasPermission("exp.transfer")) { return; }
+
                 uint commandExp;
                 bool isNumeric = uint.TryParse(command[0], out commandExp);
-                if (isNumeric)
+                if (!isNumeric) { return; }
+
+                UnturnedPlayer player = UnturnedPlayer.FromName(command[1]);
+                if (player == null)
                 {
-                    UnturnedPlayer player = UnturnedPlayer.FromName(command[1]);
-                    if (player == null)
+                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_general_not_found") == string.Empty))
                     {
-                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_other_caller_not_found") == string.Empty))
+                        UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_general_not_found"), Color.yellow);
+                    }
+                    return;
+                }
+
+                if (player.Id == caller.Id) { return; }
+
+                if (caller.HasPermission("exp.give"))
+                {
+                    player.Experience = player.Experience + commandExp;
+
+                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_give_player") == string.Empty))
+                    {
+                        UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_give_player", commandExp, caller.DisplayName), Color.yellow);
+                    }
+                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_give_caller") == string.Empty))
+                    {
+                        UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_give_caller", commandExp, player.DisplayName), Color.yellow);
+                    }
+                }
+                else if (caller.HasPermission("exp.transfer"))
+                {
+                    if ((System.Convert.ToDecimal(UPcaller.Experience) - System.Convert.ToDecimal(commandExp)) < 0)
+                    {
+                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough") == string.Empty))
                         {
-                            UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_other_caller_not_found"), Color.yellow);
+                            UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough", commandExp), Color.yellow);
                         }
                         return;
                     }
 
+                    UPcaller.Experience = UPcaller.Experience - commandExp;
                     player.Experience = player.Experience + commandExp;
-                    if (player.Id == caller.Id)
+
+                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_transfer_player") == string.Empty))
                     {
-                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_self_successful") == string.Empty))
-                        {
-                            UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_self_successful", commandExp), Color.yellow);
-                        }
+                        UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_player", commandExp, caller.DisplayName), Color.yellow);
                     }
-                    else
+                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_transfer_caller") == string.Empty))
                     {
-                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_other_player_msg") == string.Empty))
-                        {
-                            UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_other_player_msg", commandExp, caller.DisplayName), Color.yellow);
-                        }
-                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_other_caller_successful") == string.Empty))
-                        {
-                            UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_other_caller_successful", commandExp, player.DisplayName), Color.yellow);
-                        }
+                        UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_caller", commandExp, player.DisplayName), Color.yellow);
                     }
                 }
             }
@@ -73,7 +93,7 @@ namespace Freenex.EasyExp
 
         public string Help
         {
-            get { return "Give yourself or others Experience"; }
+            get { return "Give or transfer Experience"; }
         }
 
         public string Name
@@ -83,7 +103,7 @@ namespace Freenex.EasyExp
 
         public string Syntax
         {
-            get { return "<experience> <player>"; }
+            get { return "<experience> [<player>]"; }
         }
 
         public bool AllowFromConsole
@@ -101,8 +121,9 @@ namespace Freenex.EasyExp
             {
                 return new List<string>()
                 {
-                    "exp",
-                    "exp.other"
+                    "exp.self",
+                    "exp.give",
+                    "exp.transfer"
                 };
             }
         }
