@@ -70,6 +70,15 @@ namespace Freenex.EasyExp
 
         void UnturnedPlayerEvents_OnPlayerDeath(Rocket.Unturned.Player.UnturnedPlayer player, SDG.Unturned.EDeathCause cause, SDG.Unturned.ELimb limb, Steamworks.CSteamID murderer)
         {
+            if (player.HasPermission("exp.deleteondeath") && !player.IsAdmin)
+            {
+                player.Experience = 0;
+                if (!(EasyExp.Instance.Translations.Instance.Translate("experience_deleteondeath") == string.Empty))
+                {
+                    UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_deleteondeath"), Color.yellow);
+                }
+            }
+
             UnturnedPlayer UPmurderer = UnturnedPlayer.FromCSteamID(murderer);
             try
             {
@@ -79,15 +88,6 @@ namespace Freenex.EasyExp
 
             foreach (string playerPermission in UPmurderer.GetPermissions())
             {
-                if (playerPermission.ToLower().Contains("exp.deleteondeath"))
-                {
-                    player.Experience = 0;
-                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_deleteondeath") == string.Empty))
-                    {
-                        UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_deleteondeath"), Color.yellow);
-                    }
-                }
-
                 if (playerPermission.ToLower().Contains("exp.onkill."))
                 {
                     string[] OnKillPermission = playerPermission.Replace("exp.onkill.", string.Empty).Split('.');
