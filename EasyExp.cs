@@ -21,6 +21,7 @@ namespace Freenex.EasyExp
                     {"experience_general_not_found","Player not found."},
                     {"experience_give_player","{1} gave you {0} experience."},
                     {"experience_give_caller","You gave {1} {0} experience."},
+                    {"experience_give_player_console","You've got {0} experience."},
                     {"experience_transfer_player","{1} gave you {0} experience."},
                     {"experience_transfer_caller","You gave {1} {0} experience."},
                     {"experience_transfer_not_enough","You don't have {0} experience."},
