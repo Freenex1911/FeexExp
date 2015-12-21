@@ -59,7 +59,7 @@ namespace Freenex.EasyExp
                     if (isNumeric)
                     {
                         player.Experience = player.Experience + permissionExp;
-                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_onrevive") == string.Empty))
+                        if (EasyExp.Instance.Translations.Instance.Translate("experience_onrevive") != "experience_onrevive")
                         {
                             UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_onrevive", permissionExp), Color.yellow);
                         }
@@ -74,7 +74,7 @@ namespace Freenex.EasyExp
             if (player.HasPermission("exp.deleteondeath") && !player.IsAdmin)
             {
                 player.Experience = 0;
-                if (!(EasyExp.Instance.Translations.Instance.Translate("experience_deleteondeath") == string.Empty))
+                if (EasyExp.Instance.Translations.Instance.Translate("experience_deleteondeath") != "experience_deleteondeath")
                 {
                     UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_deleteondeath"), Color.yellow);
                 }
@@ -110,14 +110,14 @@ namespace Freenex.EasyExp
                     if (chance <= OnKillPercentage)
                     {
                         UPmurderer.Experience = UPmurderer.Experience + OnKillExperience;
-                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_onkill_true") == string.Empty))
+                        if (EasyExp.Instance.Translations.Instance.Translate("experience_onkill_true") != "experience_onkill_true")
                         {
                             UnturnedChat.Say(UPmurderer, EasyExp.Instance.Translations.Instance.Translate("experience_onkill_true", player.DisplayName, OnKillExperience), Color.yellow);
                         }
                     }
                     else
                     {
-                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_onkill_false") == string.Empty))
+                        if (EasyExp.Instance.Translations.Instance.Translate("experience_onkill_false") != "experience_onkill_false")
                         {
                             UnturnedChat.Say(UPmurderer, EasyExp.Instance.Translations.Instance.Translate("experience_onkill_false", player.DisplayName), Color.yellow);
                         }

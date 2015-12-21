@@ -43,7 +43,7 @@ namespace Freenex.EasyExp
                 UnturnedPlayer player = UnturnedPlayer.FromName(command[1]);
                 if (player == null)
                 {
-                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_general_not_found") == string.Empty))
+                    if (EasyExp.Instance.Translations.Instance.Translate("experience_general_not_found") != "experience_general_not_found")
                     {
                         if (caller is ConsolePlayer)
                         {
@@ -65,21 +65,21 @@ namespace Freenex.EasyExp
 
                     if (caller is ConsolePlayer)
                     {
-                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_give_player_console") == string.Empty))
+                        if (EasyExp.Instance.Translations.Instance.Translate("experience_give_player_console") != "experience_give_player_console")
                         {
                             UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_give_player_console", commandExp), Color.yellow);
                         }
                     }
                     else
                     {
-                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_give_player") == string.Empty))
+                        if (EasyExp.Instance.Translations.Instance.Translate("experience_give_player") != "experience_give_player")
                         {
                             UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_give_player", commandExp, caller.DisplayName), Color.yellow);
                         }
                     }
                     
-                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_give_caller") == string.Empty))
-                    {
+                    if (EasyExp.Instance.Translations.Instance.Translate("experience_give_caller") != "experience_give_caller")
+                        {
                         if (caller is ConsolePlayer)
                         {
                             Logger.Log(EasyExp.Instance.Translations.Instance.Translate("experience_give_caller", commandExp, player.DisplayName));
@@ -95,7 +95,7 @@ namespace Freenex.EasyExp
                     UnturnedPlayer UPcaller = (UnturnedPlayer)caller;
                     if ((System.Convert.ToDecimal(UPcaller.Experience) - System.Convert.ToDecimal(commandExp)) < 0)
                     {
-                        if (!(EasyExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough") == string.Empty))
+                        if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough") == "experience_transfer_not_enough")
                         {
                             UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough", commandExp), Color.yellow);
                         }
@@ -105,11 +105,11 @@ namespace Freenex.EasyExp
                     UPcaller.Experience = UPcaller.Experience - commandExp;
                     player.Experience = player.Experience + commandExp;
 
-                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_transfer_player") == string.Empty))
+                    if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_player") == "experience_transfer_player")
                     {
                         UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_player", commandExp, caller.DisplayName), Color.yellow);
                     }
-                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_transfer_caller") == string.Empty))
+                    if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_caller") == "experience_transfer_caller")
                     {
                         UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_caller", commandExp, player.DisplayName), Color.yellow);
                     }
