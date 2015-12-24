@@ -9,6 +9,44 @@ namespace Freenex.EasyExp
 {
     public class CommandExp : IRocketCommand
     {
+        public string Name
+        {
+            get { return "exp"; }
+        }
+
+        public string Help
+        {
+            get { return "Give or transfer Experience"; }
+        }
+
+        public string Syntax
+        {
+            get { return "<experience> [<player>]"; }
+        }
+
+        public List<string> Aliases
+        {
+            get { return new List<string>(); }
+        }
+
+        public AllowedCaller AllowedCaller
+        {
+            get { return AllowedCaller.Both; }
+        }
+
+        public List<string> Permissions
+        {
+            get
+            {
+                return new List<string>()
+                {
+                    "exp.self",
+                    "exp.give",
+                    "exp.transfer"
+                };
+            }
+        }
+
         public void Execute(IRocketPlayer caller, string[] command)
         {
             if (command.Length == 0 || command.Length > 2)
@@ -117,41 +155,5 @@ namespace Freenex.EasyExp
             }
         }
 
-        public string Help
-        {
-            get { return "Give or transfer Experience"; }
-        }
-
-        public string Name
-        {
-            get { return "exp"; }
-        }
-
-        public string Syntax
-        {
-            get { return "<experience> [<player>]"; }
-        }
-
-        public bool AllowFromConsole
-        {
-            get { return true; }
-        }
-
-        public List<string> Aliases
-        {
-            get { return new List<string>(); }
-        }
-        public List<string> Permissions
-        {
-            get
-            {
-                return new List<string>()
-                {
-                    "exp.self",
-                    "exp.give",
-                    "exp.transfer"
-                };
-            }
-        }
     }
 }
