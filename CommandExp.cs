@@ -63,7 +63,7 @@ namespace Freenex.EasyExp
                 if (isNumeric)
                 {
                     UPcaller.Experience = UPcaller.Experience + commandExp;
-                    if (!(EasyExp.Instance.Translations.Instance.Translate("experience_self") == string.Empty))
+                    if (EasyExp.Instance.Translations.Instance.Translate("experience_self") != "experience_self")
                     {
                         UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_self", commandExp), Color.yellow);
                     }
@@ -133,7 +133,7 @@ namespace Freenex.EasyExp
                     UnturnedPlayer UPcaller = (UnturnedPlayer)caller;
                     if ((System.Convert.ToDecimal(UPcaller.Experience) - System.Convert.ToDecimal(commandExp)) < 0)
                     {
-                        if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough") == "experience_transfer_not_enough")
+                        if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough") != "experience_transfer_not_enough")
                         {
                             UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough", commandExp), Color.yellow);
                         }
@@ -143,11 +143,11 @@ namespace Freenex.EasyExp
                     UPcaller.Experience = UPcaller.Experience - commandExp;
                     player.Experience = player.Experience + commandExp;
 
-                    if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_player") == "experience_transfer_player")
+                    if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_player") != "experience_transfer_player")
                     {
                         UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_player", commandExp, caller.DisplayName), Color.yellow);
                     }
-                    if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_caller") == "experience_transfer_caller")
+                    if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_caller") != "experience_transfer_caller")
                     {
                         UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_caller", commandExp, player.DisplayName), Color.yellow);
                     }

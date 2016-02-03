@@ -50,12 +50,12 @@ namespace Freenex.EasyExp
 
         void UnturnedPlayerEvents_OnPlayerRevive(Rocket.Unturned.Player.UnturnedPlayer player, Vector3 position, byte revive)
         {
-            foreach (string playerPermission in player.GetPermissions())
+            foreach (Rocket.API.Serialisation.Permission playerPermission in player.GetPermissions())
             {
-                if (playerPermission.ToLower().Contains("exp.onrevive."))
+                if (playerPermission.Name.ToLower().Contains("exp.onrevive."))
                 {
                     uint permissionExp;
-                    bool isNumeric = uint.TryParse(playerPermission.Replace("exp.onrevive.", string.Empty), out permissionExp);
+                    bool isNumeric = uint.TryParse(playerPermission.Name.ToLower().Replace("exp.onrevive.", string.Empty), out permissionExp);
                     if (isNumeric)
                     {
                         player.Experience = player.Experience + permissionExp;
@@ -87,11 +87,11 @@ namespace Freenex.EasyExp
             }
             catch { return; }
 
-            foreach (string playerPermission in UPmurderer.GetPermissions())
+            foreach (Rocket.API.Serialisation.Permission playerPermission in UPmurderer.GetPermissions())
             {
-                if (playerPermission.ToLower().Contains("exp.onkill."))
+                if (playerPermission.Name.ToLower().Contains("exp.onkill."))
                 {
-                    string[] OnKillPermission = playerPermission.Replace("exp.onkill.", string.Empty).Split('.');
+                    string[] OnKillPermission = playerPermission.Name.ToLower().Replace("exp.onkill.", string.Empty).Split('.');
 
                     uint OnKillExperience;
                     uint OnKillPercentage = 100;
