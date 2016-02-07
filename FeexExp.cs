@@ -6,11 +6,11 @@ using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
 using UnityEngine;
 
-namespace Freenex.EasyExp
+namespace Freenex.FeexExp
 {
-    public class EasyExp : RocketPlugin
+    public class FeexExp : RocketPlugin
     {
-        public static EasyExp Instance;
+        public static FeexExp Instance;
 
         public override TranslationList DefaultTranslations
         {
@@ -38,14 +38,14 @@ namespace Freenex.EasyExp
             Instance = this;
             Rocket.Unturned.Events.UnturnedPlayerEvents.OnPlayerDeath += UnturnedPlayerEvents_OnPlayerDeath;
             Rocket.Unturned.Events.UnturnedPlayerEvents.OnPlayerRevive += UnturnedPlayerEvents_OnPlayerRevive;
-            Logger.Log("Freenex's EasyExp has been loaded!");
+            Logger.Log("Freenex's FeexExp has been loaded!");
         }
 
         protected override void Unload()
         {
             Rocket.Unturned.Events.UnturnedPlayerEvents.OnPlayerDeath -= UnturnedPlayerEvents_OnPlayerDeath;
             Rocket.Unturned.Events.UnturnedPlayerEvents.OnPlayerRevive -= UnturnedPlayerEvents_OnPlayerRevive;
-            Logger.Log("Freenex's EasyExp has been unloaded!");
+            Logger.Log("Freenex's FeexExp has been unloaded!");
         }
 
         void UnturnedPlayerEvents_OnPlayerRevive(Rocket.Unturned.Player.UnturnedPlayer player, Vector3 position, byte revive)
@@ -59,9 +59,9 @@ namespace Freenex.EasyExp
                     if (isNumeric)
                     {
                         player.Experience = player.Experience + permissionExp;
-                        if (EasyExp.Instance.Translations.Instance.Translate("experience_onrevive") != "experience_onrevive")
+                        if (FeexExp.Instance.Translations.Instance.Translate("experience_onrevive") != "experience_onrevive")
                         {
-                            UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_onrevive", permissionExp), Color.yellow);
+                            UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("experience_onrevive", permissionExp), Color.yellow);
                         }
                     }
                     else { Logger.LogError(playerPermission + " is not numeric."); }
@@ -74,9 +74,9 @@ namespace Freenex.EasyExp
             if (player.HasPermission("exp.deleteondeath") && !player.IsAdmin)
             {
                 player.Experience = 0;
-                if (EasyExp.Instance.Translations.Instance.Translate("experience_deleteondeath") != "experience_deleteondeath")
+                if (FeexExp.Instance.Translations.Instance.Translate("experience_deleteondeath") != "experience_deleteondeath")
                 {
-                    UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_deleteondeath"), Color.yellow);
+                    UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("experience_deleteondeath"), Color.yellow);
                 }
             }
 
@@ -96,7 +96,7 @@ namespace Freenex.EasyExp
                     uint OnKillExperience;
                     uint OnKillPercentage = 100;
                     bool isExperienceNumeric = uint.TryParse(OnKillPermission[0], out OnKillExperience);
-                    if (!isExperienceNumeric) { Logger.LogError(OnKillPermission[0] + " is not numeric."); }
+                    if (!isExperienceNumeric) { Logger.LogError(OnKillPermission[0] + " is not numeric."); return; }
 
                     if (OnKillPermission.Length == 2)
                     {
@@ -110,16 +110,16 @@ namespace Freenex.EasyExp
                     if (chance <= OnKillPercentage)
                     {
                         UPmurderer.Experience = UPmurderer.Experience + OnKillExperience;
-                        if (EasyExp.Instance.Translations.Instance.Translate("experience_onkill_true") != "experience_onkill_true")
+                        if (FeexExp.Instance.Translations.Instance.Translate("experience_onkill_true") != "experience_onkill_true")
                         {
-                            UnturnedChat.Say(UPmurderer, EasyExp.Instance.Translations.Instance.Translate("experience_onkill_true", player.DisplayName, OnKillExperience), Color.yellow);
+                            UnturnedChat.Say(UPmurderer, FeexExp.Instance.Translations.Instance.Translate("experience_onkill_true", player.DisplayName, OnKillExperience), Color.yellow);
                         }
                     }
                     else
                     {
-                        if (EasyExp.Instance.Translations.Instance.Translate("experience_onkill_false") != "experience_onkill_false")
+                        if (FeexExp.Instance.Translations.Instance.Translate("experience_onkill_false") != "experience_onkill_false")
                         {
-                            UnturnedChat.Say(UPmurderer, EasyExp.Instance.Translations.Instance.Translate("experience_onkill_false", player.DisplayName), Color.yellow);
+                            UnturnedChat.Say(UPmurderer, FeexExp.Instance.Translations.Instance.Translate("experience_onkill_false", player.DisplayName), Color.yellow);
                         }
                     }
                 }

@@ -2,10 +2,11 @@
 using Rocket.Core.Logging;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Freenex.EasyExp
+namespace Freenex.FeexExp
 {
     public class CommandExp : IRocketCommand
     {
@@ -63,9 +64,9 @@ namespace Freenex.EasyExp
                 if (isNumeric)
                 {
                     UPcaller.Experience = UPcaller.Experience + commandExp;
-                    if (EasyExp.Instance.Translations.Instance.Translate("experience_self") != "experience_self")
+                    if (FeexExp.Instance.Translations.Instance.Translate("experience_self") != "experience_self")
                     {
-                        UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_self", commandExp), Color.yellow);
+                        UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("experience_self", commandExp), Color.yellow);
                     }
                 }
             }
@@ -81,15 +82,15 @@ namespace Freenex.EasyExp
                 UnturnedPlayer player = UnturnedPlayer.FromName(command[1]);
                 if (player == null)
                 {
-                    if (EasyExp.Instance.Translations.Instance.Translate("experience_general_not_found") != "experience_general_not_found")
+                    if (FeexExp.Instance.Translations.Instance.Translate("experience_general_not_found") != "experience_general_not_found")
                     {
                         if (caller is ConsolePlayer)
                         {
-                            Logger.Log(EasyExp.Instance.Translations.Instance.Translate("experience_general_not_found"));
+                            Logger.Log(FeexExp.Instance.Translations.Instance.Translate("experience_general_not_found"));
                         }
                         else
                         {
-                            UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_general_not_found"), Color.yellow);
+                            UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("experience_general_not_found"), Color.yellow);
                         }
                     }
                     return;
@@ -103,39 +104,39 @@ namespace Freenex.EasyExp
 
                     if (caller is ConsolePlayer)
                     {
-                        if (EasyExp.Instance.Translations.Instance.Translate("experience_give_player_console") != "experience_give_player_console")
+                        if (FeexExp.Instance.Translations.Instance.Translate("experience_give_player_console") != "experience_give_player_console")
                         {
-                            UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_give_player_console", commandExp), Color.yellow);
+                            UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("experience_give_player_console", commandExp), Color.yellow);
                         }
                     }
                     else
                     {
-                        if (EasyExp.Instance.Translations.Instance.Translate("experience_give_player") != "experience_give_player")
+                        if (FeexExp.Instance.Translations.Instance.Translate("experience_give_player") != "experience_give_player")
                         {
-                            UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_give_player", commandExp, caller.DisplayName), Color.yellow);
+                            UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("experience_give_player", commandExp, caller.DisplayName), Color.yellow);
                         }
                     }
                     
-                    if (EasyExp.Instance.Translations.Instance.Translate("experience_give_caller") != "experience_give_caller")
+                    if (FeexExp.Instance.Translations.Instance.Translate("experience_give_caller") != "experience_give_caller")
                         {
                         if (caller is ConsolePlayer)
                         {
-                            Logger.Log(EasyExp.Instance.Translations.Instance.Translate("experience_give_caller", commandExp, player.DisplayName));
+                            Logger.Log(FeexExp.Instance.Translations.Instance.Translate("experience_give_caller", commandExp, player.DisplayName));
                         }
                         else
                         {
-                            UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_give_caller", commandExp, player.DisplayName), Color.yellow);
+                            UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("experience_give_caller", commandExp, player.DisplayName), Color.yellow);
                         }
                     }
                 }
                 else if (caller.HasPermission("exp.transfer"))
                 {
                     UnturnedPlayer UPcaller = (UnturnedPlayer)caller;
-                    if ((System.Convert.ToDecimal(UPcaller.Experience) - System.Convert.ToDecimal(commandExp)) < 0)
+                    if ((Convert.ToDecimal(UPcaller.Experience) - Convert.ToDecimal(commandExp)) < 0)
                     {
-                        if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough") != "experience_transfer_not_enough")
+                        if (FeexExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough") != "experience_transfer_not_enough")
                         {
-                            UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough", commandExp), Color.yellow);
+                            UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("experience_transfer_not_enough", commandExp), Color.yellow);
                         }
                         return;
                     }
@@ -143,13 +144,13 @@ namespace Freenex.EasyExp
                     UPcaller.Experience = UPcaller.Experience - commandExp;
                     player.Experience = player.Experience + commandExp;
 
-                    if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_player") != "experience_transfer_player")
+                    if (FeexExp.Instance.Translations.Instance.Translate("experience_transfer_player") != "experience_transfer_player")
                     {
-                        UnturnedChat.Say(player, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_player", commandExp, caller.DisplayName), Color.yellow);
+                        UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("experience_transfer_player", commandExp, caller.DisplayName), Color.yellow);
                     }
-                    if (EasyExp.Instance.Translations.Instance.Translate("experience_transfer_caller") != "experience_transfer_caller")
+                    if (FeexExp.Instance.Translations.Instance.Translate("experience_transfer_caller") != "experience_transfer_caller")
                     {
-                        UnturnedChat.Say(caller, EasyExp.Instance.Translations.Instance.Translate("experience_transfer_caller", commandExp, player.DisplayName), Color.yellow);
+                        UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("experience_transfer_caller", commandExp, player.DisplayName), Color.yellow);
                     }
                 }
             }
