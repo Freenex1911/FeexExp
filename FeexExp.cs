@@ -17,18 +17,18 @@ namespace Freenex.FeexExp
             get
             {
                 return new TranslationList() {
-                    {"experience_self","You gave yourself {0} experience."},
-                    {"experience_general_not_found","Player not found."},
-                    {"experience_give_player","{1} gave you {0} experience."},
-                    {"experience_give_caller","You gave {1} {0} experience."},
-                    {"experience_give_player_console","You've got {0} experience."},
-                    {"experience_transfer_player","{1} gave you {0} experience."},
-                    {"experience_transfer_caller","You gave {1} {0} experience."},
-                    {"experience_transfer_not_enough","You don't have {0} experience."},
-                    {"experience_onrevive","You received {0} experience."},
-                    {"experience_onkill_true","You killed {0} and received {1} experience."},
-                    {"experience_onkill_false","You killed {0} but received no experience."},
-                    {"experience_deleteondeath","You lost all your experience."}
+                    {"exp_general_not_found","Player not found."},
+                    {"exp_general_invalid_parameter","Invalid parameter."},
+                    {"exp_self","You gave yourself {0} experience."},
+                    {"exp_give_player","{1} gave you {0} experience."},
+                    {"exp_give_caller","You gave {1} {0} experience."},
+                    {"exp_give_player_console","You've got {0} experience."},
+                    {"exp_transfer_player","{1} gave you {0} experience."},
+                    {"exp_transfer_caller","You gave {1} {0} experience."},
+                    {"exp_transfer_not_enough","You don't have {0} experience."},
+                    {"exp_onrevive","You received {0} experience."},
+                    {"exp_onkill_true","You killed {0} and received {1} experience."},
+                    {"exp_onkill_false","You killed {0} but received no experience."}
                 };
             }
         }
@@ -59,9 +59,9 @@ namespace Freenex.FeexExp
                     if (isNumeric)
                     {
                         player.Experience = player.Experience + permissionExp;
-                        if (FeexExp.Instance.Translations.Instance.Translate("experience_onrevive") != "experience_onrevive")
+                        if (FeexExp.Instance.Translations.Instance.Translate("exp_onrevive") != "exp_onrevive")
                         {
-                            UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("experience_onrevive", permissionExp), Color.yellow);
+                            UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("exp_onrevive", permissionExp));
                         }
                     }
                     else { Logger.LogError(playerPermission + " is not numeric."); }
@@ -71,15 +71,6 @@ namespace Freenex.FeexExp
 
         void UnturnedPlayerEvents_OnPlayerDeath(Rocket.Unturned.Player.UnturnedPlayer player, SDG.Unturned.EDeathCause cause, SDG.Unturned.ELimb limb, Steamworks.CSteamID murderer)
         {
-            if (player.HasPermission("exp.deleteondeath") && !player.IsAdmin)
-            {
-                player.Experience = 0;
-                if (FeexExp.Instance.Translations.Instance.Translate("experience_deleteondeath") != "experience_deleteondeath")
-                {
-                    UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("experience_deleteondeath"), Color.yellow);
-                }
-            }
-
             UnturnedPlayer UPmurderer = UnturnedPlayer.FromCSteamID(murderer);
             try
             {
@@ -110,16 +101,16 @@ namespace Freenex.FeexExp
                     if (chance <= OnKillPercentage)
                     {
                         UPmurderer.Experience = UPmurderer.Experience + OnKillExperience;
-                        if (FeexExp.Instance.Translations.Instance.Translate("experience_onkill_true") != "experience_onkill_true")
+                        if (FeexExp.Instance.Translations.Instance.Translate("exp_onkill_true") != "exp_onkill_true")
                         {
-                            UnturnedChat.Say(UPmurderer, FeexExp.Instance.Translations.Instance.Translate("experience_onkill_true", player.DisplayName, OnKillExperience), Color.yellow);
+                            UnturnedChat.Say(UPmurderer, FeexExp.Instance.Translations.Instance.Translate("exp_onkill_true", player.DisplayName, OnKillExperience));
                         }
                     }
                     else
                     {
-                        if (FeexExp.Instance.Translations.Instance.Translate("experience_onkill_false") != "experience_onkill_false")
+                        if (FeexExp.Instance.Translations.Instance.Translate("exp_onkill_false") != "exp_onkill_false")
                         {
-                            UnturnedChat.Say(UPmurderer, FeexExp.Instance.Translations.Instance.Translate("experience_onkill_false", player.DisplayName), Color.yellow);
+                            UnturnedChat.Say(UPmurderer, FeexExp.Instance.Translations.Instance.Translate("exp_onkill_false", player.DisplayName));
                         }
                     }
                 }
