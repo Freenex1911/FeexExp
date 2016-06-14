@@ -72,6 +72,7 @@
     <Compile Include="CommandExp.cs" />
     <Compile Include="FeexExp.cs" />
     <Compile Include="FeexExpConfiguration.cs" />
+    <Compile Include="FeexExpPlayerComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
