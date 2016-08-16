@@ -72,8 +72,8 @@ namespace Freenex.FeexExp
                 UnturnedPlayer player = UnturnedPlayer.FromName(command[1]);
                 if (player == null)
                 {
-                    if (caller is ConsolePlayer) { Logger.Log(FeexExp.Instance.Translations.Instance.Translate("exp_general_not_found")); }
-                    else { UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("exp_general_not_found")); }
+                    if (caller is ConsolePlayer) { Logger.Log(FeexExp.Instance.Translations.Instance.Translate("general_not_found")); }
+                    else { UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("general_not_found")); }
                     return;
                 }
 
@@ -107,8 +107,8 @@ namespace Freenex.FeexExp
             }
             else
             {
-                if (caller is ConsolePlayer) { Logger.Log(FeexExp.Instance.Translations.Instance.Translate("exp_general_invalid_parameter")); }
-                else { UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("exp_general_invalid_parameter")); }
+                if (caller is ConsolePlayer) { Logger.Log(FeexExp.Instance.Translations.Instance.Translate("general_invalid_parameter")); }
+                else { UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("general_invalid_parameter")); }
             }
         }
     }
