@@ -1,7 +1,6 @@
 ﻿using Rocket.API;
 using Rocket.API.Collections;
 using Rocket.API.Serialisation;
-using Rocket.Core.Logging;
 using Rocket.Core.Plugins;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Events;
@@ -12,6 +11,8 @@ using UnityEngine;
 
 namespace Freenex.FeexExp
 {
+    public class RocketLogger : Rocket.Core.Logging.Logger { }
+
     public class FeexExp : RocketPlugin<FeexExpConfiguration>
     {
         public static FeexExp Instance;
@@ -42,14 +43,14 @@ namespace Freenex.FeexExp
             Instance = this;
             UnturnedPlayerEvents.OnPlayerDeath += UnturnedPlayerEvents_OnPlayerDeath;
             UnturnedPlayerEvents.OnPlayerRevive += UnturnedPlayerEvents_OnPlayerRevive;
-            Logger.Log("Freenex's FeexExp has been loaded!");
+            RocketLogger.Log("Freenex's FeexExp has been loaded!");
         }
 
         protected override void Unload()
         {
             UnturnedPlayerEvents.OnPlayerDeath -= UnturnedPlayerEvents_OnPlayerDeath;
             UnturnedPlayerEvents.OnPlayerRevive -= UnturnedPlayerEvents_OnPlayerRevive;
-            Logger.Log("Freenex's FeexExp has been unloaded!");
+            RocketLogger.Log("Freenex's FeexExp has been unloaded!");
         }
 
         void UnturnedPlayerEvents_OnPlayerDeath(UnturnedPlayer player, SDG.Unturned.EDeathCause cause, SDG.Unturned.ELimb limb, Steamworks.CSteamID murderer)
@@ -97,12 +98,12 @@ namespace Freenex.FeexExp
                     uint permissionExp;
                     uint permissionPercentage = 100;
                     bool isNumeric = uint.TryParse(permissionExpArray[0], out permissionExp);
-                    if (!isNumeric) { Logger.LogError(permissionExpArray[0] + " is not numeric."); return; }
+                    if (!isNumeric) { RocketLogger.LogError(permissionExpArray[0] + " is not numeric."); return; }
 
                     if (permissionExpArray.Length == 2)
                     {
                         bool isPercentageNumeric = uint.TryParse(permissionExpArray[1], out permissionPercentage);
-                        if (!isPercentageNumeric) { Logger.LogError(permissionExpArray[1] + " is not numeric."); }
+                        if (!isPercentageNumeric) { RocketLogger.LogError(permissionExpArray[1] + " is not numeric."); }
                     }
 
                     System.Random rand = new System.Random();
@@ -111,11 +112,11 @@ namespace Freenex.FeexExp
                     if (chance <= permissionPercentage)
                     {
                         UPmurderer.Experience = UPmurderer.Experience + permissionExp;
-                        UnturnedChat.Say(UPmurderer, FeexExp.Instance.Translations.Instance.Translate("exp_onkill_true", player.DisplayName, permissionExp));
+                        UnturnedChat.Say(UPmurderer, FeexExp.Instance.Translations.Instance.Translate("exp_onkill_true", player.CharacterName, permissionExp));
                     }
                     else
                     {
-                        UnturnedChat.Say(UPmurderer, FeexExp.Instance.Translations.Instance.Translate("exp_onkill_false", player.DisplayName));
+                        UnturnedChat.Say(UPmurderer, FeexExp.Instance.Translations.Instance.Translate("exp_onkill_false", player.CharacterName));
                     }
                 }
             }
@@ -162,7 +163,7 @@ namespace Freenex.FeexExp
                         player.Experience = player.Experience + permissionExp;
                         UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("exp_onrevive", permissionExp));
                     }
-                    else { Logger.LogError(playerPermission + " is not numeric."); }
+                    else { RocketLogger.LogError(playerPermission + " is not numeric."); }
                 }
             }
         }

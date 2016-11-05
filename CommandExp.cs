@@ -84,10 +84,10 @@ namespace Freenex.FeexExp
                     player.Experience = player.Experience + commandExp;
 
                     if (caller is ConsolePlayer) { UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("exp_give_player_console", commandExp)); }
-                    else { UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("exp_give_player", commandExp, caller.DisplayName)); }
+                    else { UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("exp_give_player", commandExp, ((UnturnedPlayer)caller).CharacterName)); }
 
-                    if (caller is ConsolePlayer) { Logger.Log(FeexExp.Instance.Translations.Instance.Translate("exp_give_caller", commandExp, player.DisplayName)); }
-                    else { UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("exp_give_caller", commandExp, player.DisplayName)); }
+                    if (caller is ConsolePlayer) { Logger.Log(FeexExp.Instance.Translations.Instance.Translate("exp_give_caller", commandExp, player.CharacterName)); }
+                    else { UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("exp_give_caller", commandExp, player.CharacterName)); }
                 }
                 else if (caller.HasPermission("exp.transfer"))
                 {
@@ -101,8 +101,8 @@ namespace Freenex.FeexExp
                     UPcaller.Experience = UPcaller.Experience - commandExp;
                     player.Experience = player.Experience + commandExp;
 
-                    UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("exp_transfer_player", commandExp, caller.DisplayName));
-                    UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("exp_transfer_caller", commandExp, player.DisplayName));
+                    UnturnedChat.Say(player, FeexExp.Instance.Translations.Instance.Translate("exp_transfer_player", commandExp, ((UnturnedPlayer)caller).CharacterName));
+                    UnturnedChat.Say(caller, FeexExp.Instance.Translations.Instance.Translate("exp_transfer_caller", commandExp, player.CharacterName));
                 }
             }
             else
